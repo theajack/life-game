@@ -6,6 +6,7 @@
     "dev": "vite --host",
     "lint": "eslint --fix",
     "build": "vite build -m=sdk",
+    "build-app": "vite build -m=app",
     "preview": "vite preview"
   },
   "dependencies": {},

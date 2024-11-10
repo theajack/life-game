@@ -23,13 +23,19 @@ export default defineConfig(({ mode }) => {
     const isDev = mode === 'development';
     console.log('defineConfig', mode, isDev);
 
+    const config = ({
+        'development': geneDevConfig,
+        'sdk': geneBuildConfig,
+        'app': geneBuildAppConfig
+    })[mode]();
+
     return {
         define: {
             __DEV__: isDev,
             __VERSION__: `'${pubVersion}'`,
             __WIN__: 'globalThis',
         },
-        ...(isDev ? geneDevConfig() : geneBuildConfig()),
+        ...config,
     };
 });
 // ! Dev VApp 时的配置
@@ -45,6 +51,15 @@ function geneDevConfig (): UserConfig {
                 'Cross-Origin-Opener-Policy': 'same-origin',
             },
         },
+    };
+}
+
+function geneBuildAppConfig (): UserConfig {
+    return {
+        base: '/life-game',
+        build: {
+            outDir: './docs'
+        }
     };
 }
 
