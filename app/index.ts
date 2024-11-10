@@ -30,7 +30,7 @@ style({
                 border: '1px solid #555',
                 cursor: 'pointer',
                 height: '27px',
-                width: '60px',
+                width: '100px',
             }
         }
     }
@@ -51,6 +51,7 @@ function initUI () {
 
         aliveCellCount: 0,
         stepCount: 0,
+        historySize: 0,
     });
 
     const initMap = async () => {
@@ -63,7 +64,7 @@ function initUI () {
         store.randomCount = Math.round(tiles / 5);
         lifeGame = new LifeGame({
             size: store.mapSize,
-            historyMax: 10,
+            historyMax: 50,
             onHistoryEnd: (isHead) => {
                 alert(`There is no record ${isHead ? 'before' : 'after'}`);
             },
@@ -74,7 +75,8 @@ function initUI () {
                 store.stepCount = v;
             },
             onHistorySizeChange: (v) => {
-                console.log(`History size changed: ${v}`);
+                // console.log(`History size changed: ${v}`);
+                store.historySize = v;
             }
         });
         document.body.appendChild(lifeGame.canvas);
@@ -105,7 +107,8 @@ function initUI () {
         }).append(
             dom.div.class('lg-line').style({ fontWeight: 'bold', justifyContent: 'center' }).append(
                 dom.span.text(react`Steps: ${store.stepCount}; `),
-                dom.span.text(react`Cells: ${store.aliveCellCount}`),
+                dom.span.text(react`Cells: ${store.aliveCellCount}; `),
+                dom.span.text(react`History: ${store.historySize}`),
             ),
             dom.div.class('lg-line').append(
                 dom.button.text('Start').click(() => lifeGame.start()),

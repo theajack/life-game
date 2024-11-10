@@ -58,7 +58,6 @@ export class LifeGame {
                 onStepCountChange?.(data);
             } else if (type === WorkerMessageType.HistorySizeChange) {
                 this.history.size = data;
-                console.log('HistorySizeChange', data);
                 if (data === 0 || data === this.history.max) {
                     this.history.end = true;
                     this.history.isHead = data === 0;

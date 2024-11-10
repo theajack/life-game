@@ -74,7 +74,6 @@ export class History<T> {
         }
         // console.log('receive change', this.list, this.historyIndex, data);
         this.list.push(data);
-        console.log(this.list.length);
         this.setStep(this.step + 1);
     }
 
