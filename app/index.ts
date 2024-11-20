@@ -4,7 +4,10 @@
  * @Description: Coding something
  */
 import { LifeGame } from '../src';
+import { initPreset } from './map-list';
+import { storage } from './storage';
 import './style.css';
+import { findShapeWithName, parseShape, SinglePoint } from 'life-game-shape';
 
 import { createStore, dom, mount, react, style } from 'link-dom';
 
@@ -25,23 +28,31 @@ style({
                 border: '1px solid #555',
                 cursor: 'pointer',
             },
-            'input': {
+            'input, select': {
                 outline: 'none',
                 border: '1px solid #555',
                 cursor: 'pointer',
                 height: '27px',
                 width: '100px',
+            },
+            'select': {
+                width: '150px',
             }
         }
     }
 });
 
+
 function initUI () {
 
     let lifeGame: LifeGame;
+
+    let shapeInfo = findShapeWithName(storage.shape);
+
     const store = createStore({
-        interval: 500,
-        mapSize: 100,
+        interval: storage.interval,
+        mapSize: storage.mapSize,
+        chooseShape: storage.shape,
 
         initDisplay: 'flex',
         panelDisplay: 'none',
@@ -52,6 +63,15 @@ function initUI () {
         aliveCellCount: 0,
         stepCount: 0,
         historySize: 0,
+
+    });
+
+    store.$sub('interval', (v) => {storage.interval = v;});
+    store.$sub('mapSize', (v) => {storage.mapSize = v;});
+
+    store.$sub('chooseShape', v => {
+        storage.shape = v;
+        shapeInfo = findShapeWithName(v);
     });
 
     const initMap = async () => {
@@ -77,11 +97,30 @@ function initUI () {
             onHistorySizeChange: (v) => {
                 // console.log(`History size changed: ${v}`);
                 store.historySize = v;
+            },
+            onTapCell: (next, pos) => {
+                const v = store.chooseShape;
+                if (v === SinglePoint) {
+                    next();
+                } else {
+                    pos.x -= Math.floor(shapeInfo.width / 2);
+                    pos.y -= Math.floor(shapeInfo.height / 2);
+                    const { cells } = parseShape({
+                        map: shapeInfo.map,
+                        pos: pos,
+                        max: {
+                            x: store.mapSize,
+                            y: store.mapSize,
+                        }
+                    });
+                    lifeGame.addCells(cells);
+                }
             }
         });
         document.body.appendChild(lifeGame.canvas);
         await lifeGame.ready;
-        lifeGame.randomInitCells(store.randomInitCount);
+        lifeGame.setStepInterval(store.interval);
+        // lifeGame.randomInitCells(store.randomInitCount);
         store.initDisplay = 'none';
         store.panelDisplay = 'block';
     };
@@ -118,6 +157,7 @@ function initUI () {
             dom.div.class('lg-line').append(
                 dom.button.text('Back').click(() => lifeGame.back()),
                 dom.button.text('Forward').click(() => lifeGame.forward()),
+                dom.button.text('Copy Cells').click(() => lifeGame.copyCells()),
                 dom.button.text('Clear Cells').style({ color: '#f44' }).click(() => lifeGame.clear()),
             ),
             dom.div.class('lg-line').append(
@@ -135,6 +175,10 @@ function initUI () {
                 dom.input.bind(store.interval),
                 dom.span.text('ms'),
                 dom.button.text('Set').click(() => lifeGame.setStepInterval(store.interval)),
+            ),
+            dom.div.class('lg-line').append(
+                dom.span.text('Choose Shape:'),
+                initPreset(store.mapSize, store.chooseShape).bind(store.chooseShape)
             ),
             dom.div.class('lg-line').style({ color: '#888' }).text(
                 'Tip:click cell can change status'

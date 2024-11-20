@@ -7,6 +7,9 @@ import { RenderProxy } from './render/render-proxy';
 import { LifeCanvas } from './render/canvas';
 import { ControlType, WorkerMessageType } from './common/types/enum';
 import { withResolve } from './common/utils';
+import { IPos } from './common/types/types';
+
+// export { Presets } from './render/preset';
 
 export class LifeGame {
     renderProxy: RenderProxy;
@@ -20,6 +23,7 @@ export class LifeGame {
         onAliveCountChange,
         onStepCountChange,
         onHistorySizeChange,
+        onTapCell,
     }: {
         size?: number,
         historyMax?: number,
@@ -28,6 +32,7 @@ export class LifeGame {
         onAliveCountChange?: (v: number)=>void,
         onStepCountChange?: (v: number)=>void,
         onHistorySizeChange?: (v: number)=>void,
+        onTapCell?: (next: ()=>void, pos: IPos)=>void,
     } = {}) {
         this.history.max = historyMax;
         this.renderProxy = new RenderProxy();
@@ -35,36 +40,47 @@ export class LifeGame {
             canvas,
             messenger: this.renderProxy.messenger,
             size,
+            onTapCell,
         });
         const { ready, resolve } = withResolve();
         this.renderProxy.messenger.onMessage(({ type, data }) => {
-            if (type === WorkerMessageType.Control) {
-                if (data.type === ControlType.ForwardEnd) {
+            switch (type) {
+                case  WorkerMessageType.Control: {
+                    if (data.type === ControlType.ForwardEnd) {
+                        this.history.size = data;
+                        console.log('后面没有记录了');
+                        onHistoryEnd?.(false);
+                    } else if (data.type === ControlType.BackEnd) {
+                        console.log('前面没有记录了');
+                        onHistoryEnd?.(true);
+                    }
+                };break;
+                case WorkerMessageType.WorkerReady: {
+                    this.lifeGame.initMap(historyMax);
+                    resolve();
+                };break;
+                case WorkerMessageType.AliveCountChange: {
+                    this.cellCount = data;
+                    onAliveCountChange?.(data);
+                }; break;
+                case WorkerMessageType.StepCountChange: {
+                    this.stepCount = data;
+                    onStepCountChange?.(data);
+                }; break;
+                case WorkerMessageType.HistorySizeChange: {
                     this.history.size = data;
-                    console.log('后面没有记录了');
-                    onHistoryEnd?.(false);
-                } else if (data.type === ControlType.BackEnd) {
-                    console.log('前面没有记录了');
-                    onHistoryEnd?.(true);
+                    if (data === 0 || data === this.history.max) {
+                        this.history.end = true;
+                        this.history.isHead = data === 0;
+                    } else {
+                        this.history.end = false;
+                    }
+                    onHistorySizeChange?.(data);
+                }; break;
+                case WorkerMessageType.Copy: {
+                    navigator.clipboard.writeText(data);
                 }
-            } else if (type === WorkerMessageType.WorkerReady) {
-                this.lifeGame.initMap(historyMax);
-                resolve();
-            } else if (type === WorkerMessageType.AliveCountChange) {
-                this.cellCount = data;
-                onAliveCountChange?.(data);
-            } else if (type === WorkerMessageType.StepCountChange) {
-                this.stepCount = data;
-                onStepCountChange?.(data);
-            } else if (type === WorkerMessageType.HistorySizeChange) {
-                this.history.size = data;
-                if (data === 0 || data === this.history.max) {
-                    this.history.end = true;
-                    this.history.isHead = data === 0;
-                } else {
-                    this.history.end = false;
-                }
-                onHistorySizeChange?.(data);
+                default: break;
             }
         });
         this.ready = ready;
@@ -90,6 +106,9 @@ export class LifeGame {
     randomCells (count = Math.round(this.tileCount / 5)) {
         this.lifeGame.randomCells(count);
     }
+    addCells (cells: IPos[]) {
+        this.lifeGame.addCells(cells);
+    }
     setStepInterval (value: number) {
         this.control(ControlType.SetInterval, value);
     }
@@ -110,6 +129,11 @@ export class LifeGame {
     }
     clear () {
         this.control(ControlType.Clear);
+    }
+    copyCells () {
+        this.renderProxy.sendMessage({
+            type: WorkerMessageType.CopyCells,
+        });
     }
     private control (controlType: ControlType, value?: any) {
         this.renderProxy.sendMessage({

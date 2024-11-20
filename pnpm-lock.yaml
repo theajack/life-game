@@ -32,12 +32,21 @@ devDependencies:
   eslint-plugin-vue:
     specifier: ^8.0.3
     version: registry.npmmirror.com/eslint-plugin-vue@8.7.1(eslint@8.57.1)
+  life-game-shape:
+    specifier: ^0.0.1
+    version: registry.npmmirror.com/life-game-shape@0.0.1
   link-dom:
     specifier: ^0.0.3
     version: registry.npmmirror.com/link-dom@0.0.3
   npm-run-all:
     specifier: ^4.1.5
     version: registry.npmmirror.com/npm-run-all@4.1.5
+  pixi.js:
+    specifier: ^8.5.2
+    version: registry.npmmirror.com/pixi.js@8.5.2
+  tc-store:
+    specifier: ^0.0.2
+    version: registry.npmmirror.com/tc-store@0.0.2
   terser:
     specifier: ^5.16.8
     version: registry.npmmirror.com/terser@5.36.0
@@ -1762,6 +1771,12 @@ packages:
       fastq: registry.npmmirror.com/fastq@1.17.1
     dev: true
 
+  registry.npmmirror.com/@pixi/colord@2.9.6:
+    resolution: {integrity: sha512-nezytU2pw587fQstUu1AsJZDVEynjskwOL+kibwcdxsMBFqPsFFNA7xl0ii/gXuDi6M0xj3mfRJj8pBSc2jCfA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@pixi/colord/-/colord-2.9.6.tgz}
+    name: '@pixi/colord'
+    version: 2.9.6
+    dev: true
+
   registry.npmmirror.com/@rollup/plugin-babel@6.0.4(@babel/core@7.26.0):
     resolution: {integrity: sha512-YF7Y52kFdFT/xVSuVdjkV5ZdX/3YtmX0QulG+x0taQOtJdHYzVU61aSSkAgVJ7NOv6qPkIYiJSgSWWN/DM5sGw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@rollup/plugin-babel/-/plugin-babel-6.0.4.tgz}
     id: registry.npmmirror.com/@rollup/plugin-babel/6.0.4
@@ -1799,6 +1814,18 @@ packages:
       '@types/estree': registry.npmmirror.com/@types/estree@1.0.6
       estree-walker: registry.npmmirror.com/estree-walker@2.0.2
       picomatch: registry.npmmirror.com/picomatch@4.0.2
+    dev: true
+
+  registry.npmmirror.com/@types/css-font-loading-module@0.0.12:
+    resolution: {integrity: sha512-x2tZZYkSxXqWvTDgveSynfjq/T2HyiZHXb00j/+gy19yp70PHCizM48XFdjBCWH7eHBD0R5i/pw9yMBP/BH5uA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.12.tgz}
+    name: '@types/css-font-loading-module'
+    version: 0.0.12
+    dev: true
+
+  registry.npmmirror.com/@types/earcut@2.1.4:
+    resolution: {integrity: sha512-qp3m9PPz4gULB9MhjGID7wpo3gJ4bTGXm7ltNDsmOvsPduTeHp8wSW9YckBj3mljeOh4F0m2z/0JKAALRKbmLQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/earcut/-/earcut-2.1.4.tgz}
+    name: '@types/earcut'
+    version: 2.1.4
     dev: true
 
   registry.npmmirror.com/@types/estree@1.0.6:
@@ -2112,6 +2139,19 @@ packages:
     resolution: {integrity: sha512-L2RPSAwUFbgZH20etwrXyVyCBu9OxRSi8T/38QsvnkJyvq2LufW2lDCOzm7t/U9C1mkhJGWYfCuFBCmIuNivrg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue/shared/-/shared-3.5.12.tgz}
     name: '@vue/shared'
     version: 3.5.12
+    dev: true
+
+  registry.npmmirror.com/@webgpu/types@0.1.51:
+    resolution: {integrity: sha512-ktR3u64NPjwIViNCck+z9QeyN0iPkQCUOQ07ZCV1RzlkfP+olLTeEZ95O1QHS+v4w9vJeY9xj/uJuSphsHy5rQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@webgpu/types/-/types-0.1.51.tgz}
+    name: '@webgpu/types'
+    version: 0.1.51
+    dev: true
+
+  registry.npmmirror.com/@xmldom/xmldom@0.8.10:
+    resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@xmldom/xmldom/-/xmldom-0.8.10.tgz}
+    name: '@xmldom/xmldom'
+    version: 0.8.10
+    engines: {node: '>=10.0.0'}
     dev: true
 
   registry.npmmirror.com/acorn-jsx@5.3.2(acorn@8.14.0):
@@ -2551,6 +2591,12 @@ packages:
       esutils: registry.npmmirror.com/esutils@2.0.3
     dev: true
 
+  registry.npmmirror.com/earcut@2.2.4:
+    resolution: {integrity: sha512-/pjZsA1b4RPHbeWZQn66SWS8nZZWLQQ23oE3Eam7aroEFGEvwKAsJfZ9ytiEMycfzXWpca4FA9QIOehf7PocBQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/earcut/-/earcut-2.2.4.tgz}
+    name: earcut
+    version: 2.2.4
+    dev: true
+
   registry.npmmirror.com/electron-to-chromium@1.5.50:
     resolution: {integrity: sha512-eMVObiUQ2LdgeO1F/ySTXsvqvxb6ZH2zPGaMYsWzRDdOddUa77tdmI0ltg+L16UpbWdhPmuF3wIQYyQq65WfZw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/electron-to-chromium/-/electron-to-chromium-1.5.50.tgz}
     name: electron-to-chromium
@@ -2897,6 +2943,12 @@ packages:
     name: esutils
     version: 2.0.3
     engines: {node: '>=0.10.0'}
+    dev: true
+
+  registry.npmmirror.com/eventemitter3@5.0.1:
+    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/eventemitter3/-/eventemitter3-5.0.1.tgz}
+    name: eventemitter3
+    version: 5.0.1
     dev: true
 
   registry.npmmirror.com/fast-deep-equal@3.1.3:
@@ -3451,6 +3503,12 @@ packages:
     version: 2.0.0
     dev: true
 
+  registry.npmmirror.com/ismobilejs@1.1.1:
+    resolution: {integrity: sha512-VaFW53yt8QO61k2WJui0dHf4SlL8lxBofUuUmwBo0ljPk0Drz2TiuDW4jo3wDcv41qy/SxrJ+VAzJ/qYqsmzRw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/ismobilejs/-/ismobilejs-1.1.1.tgz}
+    name: ismobilejs
+    version: 1.1.1
+    dev: true
+
   registry.npmmirror.com/js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/js-tokens/-/js-tokens-4.0.0.tgz}
     name: js-tokens
@@ -3522,6 +3580,12 @@ packages:
     dependencies:
       prelude-ls: registry.npmmirror.com/prelude-ls@1.2.1
       type-check: registry.npmmirror.com/type-check@0.4.0
+    dev: true
+
+  registry.npmmirror.com/life-game-shape@0.0.1:
+    resolution: {integrity: sha512-zJ+FOI6AnTNTkAB6lAtGO2f4o00Dm8CmNsTfX5+hiqLz6VmmBO739JuWMePfzyH6zFUWY6rIWUH8Yxe3g6Tm3A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/life-game-shape/-/life-game-shape-0.0.1.tgz}
+    name: life-game-shape
+    version: 0.0.1
     dev: true
 
   registry.npmmirror.com/link-dom@0.0.3:
@@ -3777,6 +3841,12 @@ packages:
       json-parse-better-errors: registry.npmmirror.com/json-parse-better-errors@1.0.2
     dev: true
 
+  registry.npmmirror.com/parse-svg-path@0.1.2:
+    resolution: {integrity: sha512-JyPSBnkTJ0AI8GGJLfMXvKq42cj5c006fnLz6fXy6zfoVjJizi8BNTpu8on8ziI1cKy9d9DGNuY17Ce7wuejpQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/parse-svg-path/-/parse-svg-path-0.1.2.tgz}
+    name: parse-svg-path
+    version: 0.1.2
+    dev: true
+
   registry.npmmirror.com/path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/path-exists/-/path-exists-4.0.0.tgz}
     name: path-exists
@@ -3860,6 +3930,22 @@ packages:
     name: pify
     version: 3.0.0
     engines: {node: '>=4'}
+    dev: true
+
+  registry.npmmirror.com/pixi.js@8.5.2:
+    resolution: {integrity: sha512-TOt9g8ifOj4R9DN9ST1M8t2nvnuhr5oWL5YW9ywFLbnOVgFMDcEz+Xek5Mo8Xr64D+QU3qre3IFgreBlsHxTNw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/pixi.js/-/pixi.js-8.5.2.tgz}
+    name: pixi.js
+    version: 8.5.2
+    dependencies:
+      '@pixi/colord': registry.npmmirror.com/@pixi/colord@2.9.6
+      '@types/css-font-loading-module': registry.npmmirror.com/@types/css-font-loading-module@0.0.12
+      '@types/earcut': registry.npmmirror.com/@types/earcut@2.1.4
+      '@webgpu/types': registry.npmmirror.com/@webgpu/types@0.1.51
+      '@xmldom/xmldom': registry.npmmirror.com/@xmldom/xmldom@0.8.10
+      earcut: registry.npmmirror.com/earcut@2.2.4
+      eventemitter3: registry.npmmirror.com/eventemitter3@5.0.1
+      ismobilejs: registry.npmmirror.com/ismobilejs@1.1.1
+      parse-svg-path: registry.npmmirror.com/parse-svg-path@0.1.2
     dev: true
 
   registry.npmmirror.com/possible-typed-array-names@1.0.0:
@@ -4328,6 +4414,12 @@ packages:
     resolution: {integrity: sha512-Nk8c4lXvMB98MtbmjX7JwJRgJOL8fluecYCfCeYBznwmpOs8Bf15hLM6z4z71EDAhQVrQrI+wt1aLWSXZq+hXA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/systemjs/-/systemjs-6.15.1.tgz}
     name: systemjs
     version: 6.15.1
+    dev: true
+
+  registry.npmmirror.com/tc-store@0.0.2:
+    resolution: {integrity: sha512-KQsCLnaMQxse9mbSxBkhWJNQ61Ea/jo0w4i3QaAODbcWzK2IgllR+l7FqjqTNUm9pe6DuIm0iQsseuSq05hEEQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tc-store/-/tc-store-0.0.2.tgz}
+    name: tc-store
+    version: 0.0.2
     dev: true
 
   registry.npmmirror.com/terser@5.36.0:

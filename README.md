@@ -96,3 +96,6 @@ export declare class LifeGame {
 	clear(): void; // clear map
 }
 ```
+
+
+// https://conwaylife.com/book/

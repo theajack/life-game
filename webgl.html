@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Rectangle</title>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100px; height: 100px; }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        // 获取 canvas 元素
+        const canvas = document.getElementById('canvas');
+
+        // 获取 WebGL 上下文
+        const gl = canvas.getContext('webgl');
+
+        // 检查 WebGL 是否支持
+        if (!gl) {
+            alert('Your browser does not support WebGL');
+        }
+
+        // 定义顶点着色器
+        const vertexShaderSource = `
+            attribute vec2 a_position;
+            void main() {
+                gl_Position = vec4(a_position, 0.0, 1.0);
+            }
+        `;
+
+        // 定义片元着色器
+        const fragmentShaderSource = `
+            precision mediump float;
+            uniform vec4 u_color;
+            void main() {
+                gl_FragColor = u_color;
+            }
+        `;
+
+        // 创建顶点着色器
+        const vertexShader = gl.createShader(gl.VERTEX_SHADER);
+        gl.shaderSource(vertexShader, vertexShaderSource);
+        gl.compileShader(vertexShader);
+
+        // 创建片元着色器
+        const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+        gl.shaderSource(fragmentShader, fragmentShaderSource);
+        gl.compileShader(fragmentShader);
+
+        // 创建着色器程序
+        const shaderProgram = gl.createProgram();
+        gl.attachShader(shaderProgram, vertexShader);
+        gl.attachShader(shaderProgram, fragmentShader);
+        gl.linkProgram(shaderProgram);
+
+        // 检查着色器程序是否链接成功
+        if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
+            alert('Unable to initialize the shader program: ' + gl.getProgramInfoLog(shaderProgram));
+        }
+
+        // 创建缓冲区对象
+        const positionBuffer = gl.createBuffer();
+
+        // 绑定缓冲区对象到 ARRAY_BUFFER
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
+        // 定义矩形的顶点坐标
+        const positions = [
+            -0.5, -0.5,
+            0.5, -0.5,
+            -0.5, 0.5,
+            0.5, 0.5
+        ];
+
+        // 向缓冲区对象中写入数据
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+        // 获取着色器程序中的 attribute 变量
+        const positionAttributeLocation = gl.getAttribLocation(shaderProgram, 'a_position');
+
+        // 启用 attribute 变量
+        gl.enableVertexAttribArray(positionAttributeLocation);
+
+        // 设置 attribute 变量的指针
+        gl.vertexAttribPointer(positionAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+
+        // 设置清除颜色
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+
+        // 清除画布
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        // 使用着色器程序绘制矩形
+        gl.useProgram(shaderProgram);
+
+        // 设置颜色
+        const color = [1.0, 0.0, 0.0, 1.0]; // 红色
+        const colorLocation = gl.getUniformLocation(shaderProgram, 'u_color');
+        gl.uniform4fv(colorLocation, color);
+
+        // 绘制矩形
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    </script>
+</body>
+</html>

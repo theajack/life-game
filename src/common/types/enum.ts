@@ -16,6 +16,9 @@ export enum WorkerMessageType {
     AliveCountChange = 9,
     StepCountChange = 10,
     HistorySizeChange = 11,
+    Copy,
+    CopyCells,
+    AddCells,
 }
 
 export enum ControlType {

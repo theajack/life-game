@@ -70,6 +70,11 @@ export class WorkerProxy {
             console.log(new TextDecoder().decode(data));
         }
     }
+    private addCellsBuf (buf: Uint8Array) {
+        this.controller.receiveChanges(buf);
+        this.map.receiveChanges(buf);
+        this.wasm.sendData(WasmMsgType.Changes, buf);
+    }
     // @ts-ignore
     private onRenderMessage ({ type, data, canvas }: IWorkerMessage) {
         // 收到来自主线程的消息
@@ -86,9 +91,6 @@ export class WorkerProxy {
                 );
                 this.controller.history.setMax(data.historyMax);
             }; break;
-            case WorkerMessageType.Step: {
-                this.step();
-            }; break;
             case WorkerMessageType.RandomInitCells: {
                 this.map.randomInitCells(data);
                 this.initCells();
@@ -96,9 +98,11 @@ export class WorkerProxy {
             }; break;
             case WorkerMessageType.RandomCells: {
                 const buf = this.map.randomCells(data);
-                this.controller.receiveChanges(buf);
-                this.map.receiveChanges(buf);
-                this.wasm.sendData(WasmMsgType.Changes, buf);
+                this.addCellsBuf(buf);
+            }; break;
+            case WorkerMessageType.AddCells: {
+                const buf = this.map.cellsToBuf(data);
+                this.addCellsBuf(buf);
             }; break;
             case WorkerMessageType.InitCells: {
                 this.map.initCells(data);
@@ -107,6 +111,12 @@ export class WorkerProxy {
             case WorkerMessageType.TurnCell: {
                 const u8s = this.map.toPos(data.x, data.y);
                 this.wasm.sendData(WasmMsgType.TurnCell, u8s);
+            }; break;
+            case WorkerMessageType.CopyCells: {
+                this.sendMessage({
+                    type: WorkerMessageType.Copy,
+                    data: this.map.aliveCellsToString()
+                });
             }; break;
             case WorkerMessageType.Control: {
                 const { controlType, value } = data;
@@ -130,7 +140,7 @@ export class WorkerProxy {
                     }; break;
                     case ControlType.Clear: {
                         this.map.clear();
-                        this.controller.pause();
+                        // this.controller.pause();
                         this.initCells();
                     }
                     default: break;

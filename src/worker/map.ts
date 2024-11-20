@@ -83,6 +83,14 @@ export class LifeMap {
         return new Uint8Array(changes);
     }
 
+    cellsToBuf (cells: IPos[]) {
+        const changes: number[] = [];
+        cells.forEach(cell => {
+            changes.push(cell.x, cell.y, 1);
+        });
+        return new Uint8Array(changes);
+    }
+
     randomInitCells (n = Math.round(this.count / 3)) {
         this.clear();
         this._randomCells(n, pos => this.aliveCells.push(pos));
@@ -139,6 +147,15 @@ export class LifeMap {
             i += 2;
         }
         return buf;
+    }
+
+    aliveCellsToString () {
+        let s = '';
+        const to16 = (v: number) => v.toString(16).padStart(2, '0');
+        this.aliveCells.forEach(pos => {
+            s += `${to16(pos.x)}${to16(pos.y)}`;
+        });
+        return s;
     }
 
     receiveChanges (data: Uint8Array) {

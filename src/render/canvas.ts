@@ -22,10 +22,12 @@ export class LifeCanvas {
         messenger,
         canvas,
         size,
+        onTapCell,
     }: {
         messenger: Messenger,
         size: number,
         canvas?: HTMLCanvasElement,
+        onTapCell?: (next: ()=>void, pos: IPos)=>void,
     }) {
         if (size > 250) {
             throw new Error('地图长宽不能超过250');
@@ -39,13 +41,30 @@ export class LifeCanvas {
         this.canvas.height = this.height;
         this.tileSize = (this.width - this.xSize - 1) / this.xSize;
 
-        this.canvas.addEventListener('click', e => {
+
+        const next = (e: MouseEvent) => {
             const { offsetX, offsetY } = e;
             this.messenger.send({
                 type: WorkerMessageType.TurnCell,
                 data: { x: offsetX, y: offsetY },
             });
-        });
+        };
+
+        let handler: any;
+        if (onTapCell) {
+            const gap = this.tileSize + 1;
+            handler = (e: MouseEvent) => {
+                const { offsetX, offsetY } = e;
+                onTapCell(() => {next(e);}, {
+                    x: Math.floor(offsetX / gap),
+                    y: Math.floor(offsetY / gap),
+                });
+            };
+        } else {
+            handler = next;
+        }
+
+        this.canvas.addEventListener('click', handler);
     }
 
     sizeInfo () {
@@ -69,6 +88,13 @@ export class LifeCanvas {
     initCells (cells: IPos[]) {
         this.messenger.send({
             type: WorkerMessageType.InitCells,
+            data: cells,
+        });
+    }
+
+    addCells (cells: IPos[]) {
+        this.messenger.send({
+            type: WorkerMessageType.AddCells,
             data: cells,
         });
     }
