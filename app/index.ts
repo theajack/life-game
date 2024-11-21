@@ -4,12 +4,14 @@
  * @Description: Coding something
  */
 import { LifeGame } from '../src';
-import { initPreset } from './map-list';
+import { initPreset, openShapeChoose } from './map-list';
 import { storage } from './storage';
 import './style.css';
 import { findShapeWithName, parseShape, SinglePoint } from 'life-game-shape';
 
 import { createStore, dom, mount, react, style } from 'link-dom';
+
+import './task-runner';
 
 style({
     '.lg-panel': {
@@ -124,7 +126,9 @@ function initUI () {
         store.initDisplay = 'none';
         store.panelDisplay = 'block';
     };
-
+    initPreset(store.mapSize, (chooseShape) => {
+        store.chooseShape = chooseShape;
+    });
     return dom.div.class('lg-panel').append(
         dom.div.class('lg-line').style({
             display: react`${store.initDisplay}`,
@@ -177,8 +181,11 @@ function initUI () {
                 dom.button.text('Set').click(() => lifeGame.setStepInterval(store.interval)),
             ),
             dom.div.class('lg-line').append(
-                dom.span.text('Choose Shape:'),
-                initPreset(store.mapSize, store.chooseShape).bind(store.chooseShape)
+                dom.button.text('Choose Shape').click(() => {
+                    openShapeChoose();
+                }),
+                // dom.span.text('Choose Shape:'),
+                // initPreset(store.mapSize, store.chooseShape).bind(store.chooseShape)
             ),
             dom.div.class('lg-line').style({ color: '#888' }).text(
                 'Tip:click cell can change status'
