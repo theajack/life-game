@@ -20,7 +20,7 @@
     "@vitejs/plugin-vue": "^4.1.0",
     "eslint": "^8.2.0",
     "eslint-plugin-vue": "^8.0.3",
-    "life-game-shape": "^0.0.2",
+    "life-game-shape": "^0.0.3",
     "link-dom": "^0.0.3",
     "npm-run-all": "^4.1.5",
     "pixi.js": "^8.5.2",

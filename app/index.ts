@@ -201,6 +201,10 @@ function initUI () {
                 dom.span.text('ms'),
                 dom.button.text('Set').click(() => lifeGame.setStepInterval(store.interval)),
             ),
+            dom.div.class('lg-line')
+                .attr('title', react`${store.chooseShape}`)
+                .style({ fontSize: '12px' })
+                .text(react`Current Shape: ${store.chooseShape}`),
             dom.div.class('lg-line').append(
                 dom.button.text('Choose Shape').click(() => {
                     onPanelVisibleChange(true);
