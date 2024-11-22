@@ -44,6 +44,9 @@ devDependencies:
   pixi.js:
     specifier: ^8.5.2
     version: registry.npmmirror.com/pixi.js@8.5.2
+  task-runner-lib:
+    specifier: ^0.0.1
+    version: registry.npmmirror.com/task-runner-lib@0.0.1
   tc-store:
     specifier: ^0.0.2
     version: registry.npmmirror.com/tc-store@0.0.2
@@ -4414,6 +4417,12 @@ packages:
     resolution: {integrity: sha512-Nk8c4lXvMB98MtbmjX7JwJRgJOL8fluecYCfCeYBznwmpOs8Bf15hLM6z4z71EDAhQVrQrI+wt1aLWSXZq+hXA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/systemjs/-/systemjs-6.15.1.tgz}
     name: systemjs
     version: 6.15.1
+    dev: true
+
+  registry.npmmirror.com/task-runner-lib@0.0.1:
+    resolution: {integrity: sha512-hCxB3Wzewj+SS7STyy0EzrVkVEeHco6e1It6mbSvYEjqT/+WtdisjBfP6YCA9uNx4LmEitV9TjcG195OZ0BTxQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/task-runner-lib/-/task-runner-lib-0.0.1.tgz}
+    name: task-runner-lib
+    version: 0.0.1
     dev: true
 
   registry.npmmirror.com/tc-store@0.0.2:

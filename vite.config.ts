@@ -9,8 +9,7 @@ import { babel } from '@rollup/plugin-babel';
 // loadEnv
 import { resolve } from 'path';
 import { execSync } from 'child_process';
-// import upfs from 'up-fs';
-import { writeFileSync } from 'fs';
+import { writeFileSync, copyFileSync } from 'fs';
 import { version, ebuild, dependencies } from './package.json';
 
 const fileName = ebuild.fileName || ebuild.publish.name;
@@ -98,6 +97,8 @@ function geneBuildConfig (): UserConfig {
 }
 
 function generatePackage () {
+    copyFileSync('./README.md', './npm/README.md');
+    copyFileSync('./LICENSE', './npm/LICENSE');
     writeFileSync('./npm/package.json', JSON.stringify({
         ...ebuild.publish,
         dependencies,

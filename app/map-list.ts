@@ -5,7 +5,7 @@
  */
 import { dom, Dom, query, style } from 'link-dom';
 import { getShapeNameList, findShapeWithName, parseShape } from 'life-game-shape';
-import { runTasks } from './task-runner';
+import { runTasks } from 'task-runner-lib';
 import { withResolve } from '../src/common/utils';
 
 let ShapePanel: Dom;
@@ -33,7 +33,15 @@ style({
 
 const { ready, resolve } = withResolve();
 
-export async function initPreset (mapSize: number, onChoose: (v: string)=>void) {
+export async function initPreset ({
+    mapSize,
+    onChoose,
+    onClose,
+}: {
+    mapSize: number,
+    onChoose: (v: string)=>void,
+    onClose: ()=> void,
+}) {
     const list = getShapeNameList(mapSize);
     // return dom.select.value(val).append(
     //     dom.option.text(val),
@@ -52,7 +60,21 @@ export async function initPreset (mapSize: number, onChoose: (v: string)=>void) 
             zIndex: 100000,
             alignContent: 'flex-start',
             overflow: 'auto',
-        }).hide(),
+            paddingTop: '40px',
+        }).append(
+            dom.span.text('×').style({
+                position: 'fixed',
+                zIndex: '100',
+                top: '0',
+                right: '15px',
+                color: '#f44',
+                cursor: 'pointer',
+                fontSize: '30px',
+            }).click(() => {
+                onClose();
+                ShapePanel.hide();
+            })
+        ).hide(),
     );
 
     const tasks = list.map(name => {
@@ -83,6 +105,7 @@ export async function initPreset (mapSize: number, onChoose: (v: string)=>void) 
                 dom.div.attr('title', name)
                     .click(() => {
                         onChoose(name);
+                        onClose();
                         ShapePanel.hide();
                     })
                     .class('shape-box').append(

@@ -11,8 +11,6 @@ import { findShapeWithName, parseShape, SinglePoint } from 'life-game-shape';
 
 import { createStore, dom, mount, react, style } from 'link-dom';
 
-import './task-runner';
-
 style({
     '.lg-panel': {
         position: 'fixed',
@@ -47,7 +45,24 @@ style({
 
 function initUI () {
 
+
     let lifeGame: LifeGame;
+
+    let needResume = false;
+
+    const onPanelVisibleChange = (visible: boolean) => {
+        if (visible) {
+            if (!lifeGame.paused) {
+                needResume = true;
+                lifeGame.pause();
+            }
+        } else {
+            if (needResume) {
+                needResume = false;
+                lifeGame.start();
+            }
+        }
+    };
 
     let shapeInfo = findShapeWithName(storage.shape);
 
@@ -126,8 +141,14 @@ function initUI () {
         store.initDisplay = 'none';
         store.panelDisplay = 'block';
     };
-    initPreset(store.mapSize, (chooseShape) => {
-        store.chooseShape = chooseShape;
+    initPreset({
+        mapSize: store.mapSize,
+        onChoose: (chooseShape) => {
+            store.chooseShape = chooseShape;
+        },
+        onClose () {
+            onPanelVisibleChange(false);
+        }
     });
     return dom.div.class('lg-panel').append(
         dom.div.class('lg-line').style({
@@ -182,6 +203,7 @@ function initUI () {
             ),
             dom.div.class('lg-line').append(
                 dom.button.text('Choose Shape').click(() => {
+                    onPanelVisibleChange(true);
                     openShapeChoose();
                 }),
                 // dom.span.text('Choose Shape:'),

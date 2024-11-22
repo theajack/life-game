@@ -10,7 +10,7 @@ import { withResolve } from './common/utils';
 import { IPos } from './common/types/types';
 
 // export { Presets } from './render/preset';
-
+// todo 边界循环
 export class LifeGame {
     renderProxy: RenderProxy;
     lifeGame!: LifeCanvas;
@@ -100,6 +100,8 @@ export class LifeGame {
     };
     stepCount = 0;
 
+    paused = true;
+
     randomInitCells (count = Math.round(this.tileCount / 4)) {
         this.lifeGame.randomInitCells(count);
     }
@@ -114,9 +116,11 @@ export class LifeGame {
     }
     start () {
         this.control(ControlType.Start);
+        this.paused = false;
     }
     pause () {
         this.control(ControlType.Pause);
+        this.paused = true;
     }
     step () {
         this.control(ControlType.Step);
